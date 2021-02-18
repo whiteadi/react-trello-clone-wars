@@ -1,0 +1,16 @@
+{
+  "name": "express-api-sqlite",
+  "version": "1.0.0",
+  "description": "Express REST Trello API",
+  "main": "server.js",
+  "author": "Adrian",
+  "license": "MIT",
+  "scripts": {
+    "start": "node server.js",
+    "test": "echo 'Error: no test specified' && exit 1"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "sqlite3": "^5.0.2"
+  }
+}

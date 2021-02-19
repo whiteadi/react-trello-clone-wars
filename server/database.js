@@ -18,7 +18,7 @@ let db = new sqlite3.Database(DBSOURCE, (err) => {
                 // columns table already created
                 console.log('Columns')
             } else {
-                // try to create teh cards table
+                // try to create the cards table
                 db.run(`CREATE TABLE cards (
                     id INTEGER PRIMARY KEY AUTOINCREMENT,
                     description text,

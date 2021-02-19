@@ -53,7 +53,7 @@ app.get("/api/columns/:id", (req, res, next) => {
       });
 });
 
-app.post("/api/columns/", (req, res, next) => {
+app.post("/api/columns", (req, res, next) => {
     var errors=[]
     if (!req.body.label){
         errors.push("No label specified");
@@ -63,8 +63,8 @@ app.post("/api/columns/", (req, res, next) => {
         return;
     }
     var data = {
-        name: req.body.label
-    }
+      label: req.body.label,
+    };
     var sql ='INSERT INTO columns (label) VALUES (?)'
     var params =[data.label]
     db.run(sql, params, function (err, result) {
@@ -111,7 +111,7 @@ app.get("/api/cards/:id", (req, res, next) => {
       });
 });
 
-app.post("/api/cards/", (req, res, next) => {
+app.post("/api/cards", (req, res, next) => {
     var errors=[]
     if (!req.body.description){
         errors.push("No description specified");
@@ -155,8 +155,8 @@ app.patch("/api/cards/:id", (req, res, next) => {
            WHERE id = ?`,
         [data.description, data.columnId, req.params.id],
         function (err, result) {
-            if (err){
-                res.status(400).json({"error": res.message})
+            if (err) {
+                res.status(400).json({ "error": res.message })
                 return;
             }
             res.json({
@@ -164,8 +164,23 @@ app.patch("/api/cards/:id", (req, res, next) => {
                 data: data,
                 changes: this.changes
             })
+        });
+});
+
+app.get('/api/cards', (req, res, next) => {
+  var sql = 'select * from cards';
+  var params = [];
+  db.all(sql, params, (err, rows) => {
+    if (err) {
+      res.status(400).json({ error: err.message });
+      return;
+    }
+    res.json({
+      message: 'success',
+      data: rows,
     });
-})
+  });
+});
 
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");

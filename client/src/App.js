@@ -7,15 +7,23 @@ import './App.scss';
 const App = () => {
   const [columns, setColumns] = useState([]);
   const [cards, setCards] = useState([]);
+  const [newColumnLabel, setNewColumnLabel] = useState('');
+  const [state, setState] = useState();
+
   let api = axios.create({
     baseURL: 'http://localhost:8000/api/',
   });
+  const configPost = {
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+  };
 
   useEffect(() => {
     const loadColumns = async () => {
       try {
+        // fetch both, not ideal but lets do it so first :)
         const response = await api.get('/columns');
-
         const columns = response.data.data;
         const cardsResponse = await api.get('/cards');
         setCards(cardsResponse.data.data);
@@ -26,7 +34,8 @@ const App = () => {
     };
 
     loadColumns();
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [state]);
 
   const onDragOver = (event) => {
     event.preventDefault();
@@ -39,6 +48,28 @@ const App = () => {
   const onDrop = (event) => {
     let data = event.dataTransfer.getData('id');
     event.target.appendChild(document.getElementById(data));
+    // we use title to get the id of dropped on copumn, cannot use id so it will not match with a card id
+    api.post(`/cards/${data}`, `columnId=${event.target.title}`, configPost);
+  };
+
+  const onChange = (event) => {
+    setNewColumnLabel(event.target.value);
+  };
+
+  const handleKeyDown = (event) => {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      api.post('/columns', `label=${event.target.value}`, configPost).then(
+        (response) => {
+          // not the best way to refresh but good 4 now
+          setState({});
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+      setNewColumnLabel('');
+    }
   };
 
   const renderCards = (theCards) => {
@@ -56,11 +87,25 @@ const App = () => {
 
   return (
     <div className="sections">
+      <>
+        <div className="section">
+          <div className="section-title">
+            <h2>{newColumnLabel}</h2>
+            <input
+              value={newColumnLabel}
+              onChange={onChange}
+              onKeyDown={handleKeyDown}
+              placeholder="New Column"
+            />
+          </div>
+        </div>
+      </>
       {columns &&
         cards &&
         columns.map((column) => (
           <div key={column.id} className="section">
             <Column
+              title={column.id}
               cards={getCards(column.id)}
               renderCards={renderCards}
               label={column.label}

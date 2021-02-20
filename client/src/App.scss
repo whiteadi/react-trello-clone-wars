@@ -1,31 +1,12 @@
-
-.App {
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-nav {
-  background-color: #e5e5e6;
-  height: 60px;
-  /* font-size: x-large;
-  font-weight: bolder; */
-  text-align: center;
-  padding: 10px;
-
-  h1 {
-    margin: 0;
-  }
-}
-
 .sections {
   display: flex;
   width: 100vw;
   height: 100vh;
-  // flex-direction: column;
 
   .section {
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: 0;
     background-color: #e5e5e6;
     margin: 20px 10px 10px 10px;
     border-radius: 30px;

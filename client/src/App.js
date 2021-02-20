@@ -85,6 +85,8 @@ const App = () => {
   const getCards = (columnId) =>
     cards.filter((card) => card.columnid === columnId);
 
+  const onNewCard = () => setState({});
+
   return (
     <div className="sections">
       <>
@@ -111,6 +113,7 @@ const App = () => {
               label={column.label}
               onDrop={onDrop}
               onDragOver={onDragOver}
+              onNewCard={onNewCard}
             />
           </div>
         ))}

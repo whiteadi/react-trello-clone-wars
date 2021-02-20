@@ -22,6 +22,8 @@
 
    `git clone https://github.com/whiteadi/react-trello-clone-wars.git`
 
+   `cd` into it `cd react-trello-clone-wars`
+
 2. `cd` into `/client` and `/server` and install dependencies with
 
    `npm install` or `yarn`

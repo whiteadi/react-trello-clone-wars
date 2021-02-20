@@ -1,9 +1,11 @@
 // Create express app
 var express = require('express');
 var app = express();
+var cors = require('cors');
 var bodyParser = require('body-parser');
 var db = require('./database.js');
 
+app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -183,11 +185,6 @@ app.get('/api/cards', (req, res, next) => {
       data: rows,
     });
   });
-});
-
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*');
-  next();
 });
 
 // Default response for any other request

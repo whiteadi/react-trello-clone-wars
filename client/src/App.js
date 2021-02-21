@@ -46,10 +46,14 @@ const App = () => {
   };
 
   const onDrop = (event) => {
-    let data = event.dataTransfer.getData('id');
-    //event.target.appendChild(document.getElementById(data));
-    // we use title to get the id of dropped on column, cannot use id so it will not match with a card id
-    api.post(`/cards/${data}`, `columnId=${event.target.title}`, configPost);
+    let data = event.dataTransfer.getData('id');    
+    // we use title to get the id of dropped on column
+    // 1. cannot use id of column and cards
+    // 2. must get the id(title :)) of column even if the card is dropped on another card
+    const targetId = event.target.title
+      ? event.target.title
+      : document.getElementById(event.target.id).parentNode.title;
+    api.post(`/cards/${data}`, `columnId=${targetId}`, configPost);
     setState({});
   };
 
@@ -76,6 +80,7 @@ const App = () => {
   const renderCards = (theCards) => {
     return theCards.map((card) => (
       <Card
+        key={card.id}
         id={card.id}
         description={card.description}
         onDragStart={onDragStart}

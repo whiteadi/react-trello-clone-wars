@@ -48,7 +48,6 @@ const Column = ({
       <div
         onDrop={(event) => onDrop(event)}
         onDragOver={(e) => onDragOver(e)}
-        onNewCard={onNewCard}
         className="body-section"
         title={title}
       >
@@ -57,6 +56,7 @@ const Column = ({
             className="newcard"
             contentEditable="true"
             onKeyDown={handleKeyDown}
+            suppressContentEditableWarning={true}
           >
             Add a new card?
           </h3>

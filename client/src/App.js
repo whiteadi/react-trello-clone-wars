@@ -47,9 +47,10 @@ const App = () => {
 
   const onDrop = (event) => {
     let data = event.dataTransfer.getData('id');
-    event.target.appendChild(document.getElementById(data));
-    // we use title to get the id of dropped on copumn, cannot use id so it will not match with a card id
+    //event.target.appendChild(document.getElementById(data));
+    // we use title to get the id of dropped on column, cannot use id so it will not match with a card id
     api.post(`/cards/${data}`, `columnId=${event.target.title}`, configPost);
+    setState({});
   };
 
   const onChange = (event) => {

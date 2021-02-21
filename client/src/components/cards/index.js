@@ -42,7 +42,11 @@ const Card = ({ id, description, onDragStart }) => {
       onDragStart={(event) => onDragStart(event)}
       role="link"
     >
-      <h3 contentEditable="true" onKeyDown={handleKeyDown}>
+      <h3
+        contentEditable="true"
+        onKeyDown={handleKeyDown}
+        suppressContentEditableWarning={true}
+      >
         {description}
       </h3>
     </div>
